@@ -1,0 +1,97 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+color = sns.color_palette()
+
+
+seleccionar por alguna causa
+
+selectdata = dataCombinate[dataCombinate['C_BAS1']=='X954']
+
+##croostab entre causa y sexo
+#ctZona = pd.crosstab(data['C_BAS1'],data['AREA_RES'])
+
+#
+#data['AREA_RES'] = data['AREA_RES'].replace(' ','999')
+#
+
+
+#data['COD_MUNIC'].unique()
+#
+##causas segunpromedio del grupo de edad
+#pomedioCausa = data[['C_BAS1','GRU_ED1']].groupby(['C_BAS1'],as_index=False).mean()
+
+#plt.figure(figsize=(12,6))
+#sns.barplot(municipiosCausas.index, municipiosCausas.values, alpha=0.8, color=color[1])
+#plt.xticks(rotation='vertical')
+#plt.xlabel('Departamento de registro de las defunciones', fontsize=12)
+#plt.ylabel('Numero de defunciones', fontsize=12)
+#plt.title("defunciones segun departamento", fontsize=16)
+#plt.show()
+
+#grouped_df = data.groupby(["C_BAS1", "SEXO"])["AREA_RES"].aggregate("count").reset_index()
+#
+##tabla pivote de sexo por causa basica
+#grouped_df = grouped_df.pivot('C_BAS1', 'SEXO', 'AREA_RES')
+#
+#plt.figure(figsize=(10,10))
+#temp_series = data['C_BAS1'].value_counts()
+#labels = (np.array(temp_series.index))
+#sizes = (np.array((temp_series / temp_series.sum())*100))
+#plt.pie(sizes, labels=labels, 
+#        autopct='%1.1f%%', startangle=200)
+#plt.title("Causa basica distribucion", fontsize=15)
+#plt.show()
+#
+
+#print(data.groupby(["C_BAS1", "SEXO"], as_index=False).count())
+##muy buena tabla agrypada y con valores de conteo
+ddatosxsexo =dataCombinate.groupby('C_BAS1')['SEXO'].value_counts().unstack().fillna(0)
+
+Fusionar dos archvios segun indice
+datosUNidos = pd.merge(datosUNidos, data2, on =['ORGANIZACIÓN'])
+
+separa una columna segun un parameto
+telefonos = juntasAccion['TELEFONO ORGANIZACIÓN'].str.split('-',expand = True)
+
+
+fusionar segun indice
+
+fusion =  pd.concat([juntasAccion, telefonos], axis = 1)
+
+
+comunas = {'1 - POPULAR':'1',
+           '2 - SANTA CRUZ':'2',
+           '3 - MANRIQUE':'3',
+           '4 - ARANJUEZ':'4',
+           '5 -  CASTILLA':'5',
+           '6 - DOCE DE OCTUBRE':'6',
+           '7 - ROBLEDO':'7',
+           '8 - VILLA HERMOSA':'8',
+           '9 - BUENOS AIRES':'9',
+           '10 - LA CANDELARIA':'10',
+           '11 - LURELES ESTADIO':'11',
+           '12 - LA AMERICA':'12',
+           '13 - SAN JAVIER':'13',
+           '14  - POBLADO':'14',
+           '15 - GUAYABAL':'15',
+           '16 - BELÉN':'16',
+           '50 - PALMITAS':'50',
+           '60 - SAN CRISTOBAL':'60',
+           '70 - ALTAVISTA':'70',
+           '80 - SAN ANTONIO DE PRADO':'80',
+           '90 - SANTA ELENA':'90'}
+
+
+fusion['COMUNA'] = fusion['COMUNA'].replace(comunas)
+
+
+# pasar un dataframea ecel
+
+from pandas import ExcelWriter
+
+writer = ExcelWriter('dataMigracion/jacInsert.xlsx')
+fusion.to_excel(writer)
+writer.save()
+
+
+
